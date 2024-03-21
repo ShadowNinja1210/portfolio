@@ -14,7 +14,7 @@ const Games = () => {
         <h1 className="font-medium text-4xl text-center text-gray-200">Games</h1>;
       </section>
       <section className="text-gray-100">
-        <div className="flex gap-8 p-8">
+        <div className="flex gap-8 p-8 justify-center items-center flex-wrap">
           {gameList.map((game, index) => {
             return (
               <Link href={game.url} key={index}>

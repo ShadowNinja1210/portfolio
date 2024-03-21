@@ -6,19 +6,16 @@ var started = false;
 var highest = 0;
 
 //Keyboard
-$(document).keydown(function() {
-
+$(document).on("keydown click touchstart", function () {
   if (!started) {
     $("#level-title").text("Level " + level);
     nextSequence();
     started = true;
   }
-
 });
 
 //Click
-$(".btn").click(function() {
-
+$(".btn").click(function () {
   if (started) {
     var userChosenColour = $(this).attr("id");
     userClickedPattern.push(userChosenColour);
@@ -26,12 +23,10 @@ $(".btn").click(function() {
     animatePressed(userChosenColour);
     checkAnswer(userClickedPattern.length - 1);
   }
-
 });
 
 //Sequence Function
 function nextSequence() {
-
   userClickedPattern = [];
   level++;
   $("#level-title").text("Level " + level);
@@ -39,45 +34,42 @@ function nextSequence() {
   var randomChosenColour = buttonColours[randomNumber];
   gamePattern.push(randomChosenColour);
   //Animation
-  $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
+  $("#" + randomChosenColour)
+    .fadeIn(100)
+    .fadeOut(100)
+    .fadeIn(100);
   //Sound
   playSound(randomChosenColour);
-  if(highest<level){
-    highest=level;
+  if (highest < level) {
+    highest = level;
   }
 }
 
 //Sound Function
 function playSound(file) {
-
   var audio = new Audio("sounds/" + file + ".mp3");
   audio.play();
-
 }
 
 //Animation for click
 function animatePressed(currentColor) {
-
   $("#" + currentColor).addClass("pressed");
-  setTimeout(function() {
+  setTimeout(function () {
     $("#" + currentColor).removeClass("pressed");
   }, 100);
-
 }
 
 //Answer Check (Main Game)
 function checkAnswer(currentlevel) {
-
   if (userClickedPattern[currentlevel] === gamePattern[currentlevel]) {
     if (userClickedPattern.length === gamePattern.length) {
-      setTimeout(function() {
+      setTimeout(function () {
         nextSequence();
       }, 1000);
-
     }
   } else {
     $("body").addClass("game-over");
-    setTimeout(function() {
+    setTimeout(function () {
       $("body").removeClass("game-over");
     }, 200);
     var boom = new Audio("sounds/wrong.mp3");
@@ -86,7 +78,6 @@ function checkAnswer(currentlevel) {
     $("#level-title").text("High Score: " + highest + " Your Score: " + level + " Game Over, Press Any Key to Restart");
     startOver();
   }
-
 }
 
 //Startover for starting again
